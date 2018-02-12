@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DesignPatternsLearning.Behavioral;
+using System;
 
 namespace DesignPatternsLearning
 {
     class Program
     {
+        delegate double func(int num);
         static void Main(string[] args)
         {
+            ObserverPattern.Run();
+            Console.Read();
+
         }
+
     }
+
+
+
 }
