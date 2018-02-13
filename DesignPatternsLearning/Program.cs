@@ -1,4 +1,4 @@
-﻿using DesignPatternsLearning.Behavioral;
+﻿using DesignPatternsLearning.Creational;
 using System;
 
 namespace DesignPatternsLearning
@@ -8,7 +8,8 @@ namespace DesignPatternsLearning
         delegate double func(int num);
         static void Main(string[] args)
         {
-            ObserverPattern.Run();
+            FactoryMethod.Run();
+            AbstractFactoryPattern.Run();
             Console.Read();
 
         }

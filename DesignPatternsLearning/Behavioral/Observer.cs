@@ -5,6 +5,12 @@ namespace DesignPatternsLearning.Behavioral
 {
 
     /*
+    Source: http://www.dofactory.com/net/observer-design-pattern
+    
+    Definition
+
+        Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+    
     Participants
 
     The classes and objects participating in this pattern are:
