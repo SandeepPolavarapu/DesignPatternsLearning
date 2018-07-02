@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DesignPatternsLearning.Creational
 {
@@ -38,10 +39,25 @@ namespace DesignPatternsLearning.Creational
                 Console.WriteLine("Created {0}", product.GetType().Name);
             }
 
+            Document[] documents = new Document[2];
+
+            documents[0] = new Resume();
+            documents[1] = new Report();
+
+            // Display document pages
+
+            foreach (Document document in documents)
+            {
+                Console.WriteLine("\n" + document.GetType().Name + "--");
+                foreach (Page page in document.Pages)
+                {
+                    Console.WriteLine(" " + page.GetType().Name);
+                }
+            }
         }
     }
 
-
+    #region Structural Code
     abstract class Product
     {
 
@@ -76,6 +92,67 @@ namespace DesignPatternsLearning.Creational
             return new ConcreteProductB();
         }
     }
+    #endregion
+
+    #region Real-World Code
+
+    abstract class Page
+    {
+
+    }
+
+    class SkillsPage : Page
+    {
+
+    }
+    class EducationPage : Page
+    {
+
+    }
+    class ExperiencePage : Page
+    {
+
+    }
+    class IntroductionPage : Page
+    {
+
+    }
+    class BibliographyPage : Page
+    {
+
+    }
+
+    abstract class Document
+    {
+        public List<Page> Pages = new List<Page>();
+
+        public Document()
+        {
+            this.CreatePages();
+        }
+        public abstract void CreatePages();
+    }
+
+    class Resume : Document
+    {
+        public override void CreatePages()
+        {
+            Pages.Add(new SkillsPage());
+            Pages.Add(new EducationPage());
+            Pages.Add(new ExperiencePage());
+        }
+    }
+
+    class Report : Document
+    {
+        public override void CreatePages()
+        {
+            Pages.Add(new IntroductionPage());
+            Pages.Add(new BibliographyPage());
+        }
+    }
+    #endregion
+
     #endregion
 
     #region Abstarct Factory Pattern
@@ -117,9 +194,18 @@ namespace DesignPatternsLearning.Creational
             AbstractFactory factory2 = new ConcreteFactory2();
             Client client2 = new Client(factory2);
             client2.Run();
+
+            ContinentFactory factory3 = new AfricaFactory();
+            AnimalWorld animal1 = new AnimalWorld(factory3);
+            animal1.RunFoodChain();
+
+            ContinentFactory factory4 = new AmericaFactory();
+            AnimalWorld animal2 = new AnimalWorld(factory4);
+            animal2.RunFoodChain();
         }
     }
 
+    #region Structural Code
     abstract class AbstractFactory
     {
         public abstract AbstractProductA CreateProductA();
@@ -205,5 +291,97 @@ namespace DesignPatternsLearning.Creational
             _abstractProductB.Interact(_abstractProductA);
         }
     }
+    #endregion
+
+    #region Real-World Code
+    abstract class ContinentFactory
+    {
+        public abstract Herbivore CreateHerbivore();
+        public abstract Carnivore CreateCarnivore();
+    }
+
+    class AfricaFactory : ContinentFactory
+    {
+        public override Herbivore CreateHerbivore()
+        {
+            return new Wildebeest();
+        }
+        public override Carnivore CreateCarnivore()
+        {
+            return new Lion();
+        }
+    }
+
+    class AmericaFactory : ContinentFactory
+    {
+        public override Herbivore CreateHerbivore()
+        {
+            return new Bison();
+        }
+        public override Carnivore CreateCarnivore()
+        {
+            return new Wolf();
+        }
+    }
+
+    abstract class Herbivore
+    {
+    }
+
+    abstract class Carnivore
+    {
+        public abstract void Eat(Herbivore h);
+    }
+
+    class Wildebeest : Herbivore
+    {
+    }
+
+    class Lion : Carnivore
+    {
+        public override void Eat(Herbivore h)
+        {
+            // Eat Wildebeest
+
+            Console.WriteLine(this.GetType().Name +
+              " eats " + h.GetType().Name);
+        }
+    }
+
+    class Bison : Herbivore
+    {
+    }
+
+    class Wolf : Carnivore
+    {
+        public override void Eat(Herbivore h)
+        {
+            // Eat Bison
+
+            Console.WriteLine(this.GetType().Name +
+              " eats " + h.GetType().Name);
+        }
+    }
+
+    class AnimalWorld
+    {
+        private Herbivore _herbivore;
+        private Carnivore _carnivore;
+
+        // Constructor
+
+        public AnimalWorld(ContinentFactory factory)
+        {
+            _carnivore = factory.CreateCarnivore();
+            _herbivore = factory.CreateHerbivore();
+        }
+
+        public void RunFoodChain()
+        {
+            _carnivore.Eat(_herbivore);
+        }
+    }
+    #endregion
+
     #endregion
 }

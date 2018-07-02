@@ -1,4 +1,4 @@
-﻿using DesignPatternsLearning.Creational;
+﻿using DesignPatternsLearning.Structural;
 using System;
 
 namespace DesignPatternsLearning
@@ -8,8 +8,9 @@ namespace DesignPatternsLearning
         delegate double func(int num);
         static void Main(string[] args)
         {
-            FactoryMethod.Run();
-            AbstractFactoryPattern.Run();
+            //FactoryMethod.Run();
+            //AbstractFactoryPattern.Run();
+            DecoratorPattern.Run();
             Console.Read();
 
         }
